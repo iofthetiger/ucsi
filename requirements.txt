@@ -1,0 +1,4 @@
+opencv-python
+git+https://github.com/qubvel/segmentation_models.pytorch
+albumentations==0.4.2
+fastai==1.0.59
