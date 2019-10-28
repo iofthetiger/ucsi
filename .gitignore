@@ -2,4 +2,5 @@ train_images
 test_images
 train.csv
 sample_submission.csv
+jit/*.pth
 fastai
