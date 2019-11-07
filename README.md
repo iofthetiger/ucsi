@@ -21,3 +21,9 @@ The git for the could detection
 * [x] Ensemble
 * [x] Polygon
 * [ ] More experiments on min size/threshold
+
+### Ploygon Convex Post Processing
+ This is a CPU only operation
+ ```
+ python polygon_cpu.py --csv=subxxx.csv
+ ```
