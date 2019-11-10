@@ -205,7 +205,7 @@ def post_process(probability, threshold, min_size):
     than `min_size` are ignored
     """
     # don't remember where I saw it
-    mask = cv2.threshold(probability, threshold, 1, cv2.THRESH_BINARY)[1]
+    mask = cv2.threshold(np.float32(probability), threshold, 1, cv2.THRESH_BINARY)[1]
     num_component, component = cv2.connectedComponents(mask.astype(np.uint8))
     predictions = np.zeros((350, 525), np.float32)
     num = 0
