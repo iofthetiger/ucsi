@@ -19,8 +19,8 @@ from torch.utils.data import TensorDataset, DataLoader,Dataset
 from pathlib import Path
 HOME = Path(os.environ["HOME"])
 
-path = HOME/'ucsi'
-INPUT_SIZE = (384,576)
+path = '/data2/nelson_projs/ucsi'
+INPUT_SIZE = (704,1006)
 
 class CloudDataset(Dataset):
     def __init__(self, df: pd.DataFrame = None, datatype: str = 'train', img_ids: np.array = None,
@@ -219,8 +219,11 @@ def post_process(probability, threshold, min_size):
 
 def get_training_augmentation():
     train_transform = [
-
-        albu.HorizontalFlip(p=0.5),
+        
+        albu.Blur(p=0.5),
+        albu.Flip(p=0.5),
+        albu.RandomBrightness(p=0.5),
+        albu.RandomContrast(p=0.5),
         albu.ShiftScaleRotate(scale_limit=0.5, rotate_limit=0, shift_limit=0.1, p=0.5, border_mode=0),
         albu.GridDistortion(p=0.5),
         albu.OpticalDistortion(p=0.5, distort_limit=2, shift_limit=0.5),
