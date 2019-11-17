@@ -13,11 +13,13 @@ from tqdm import tqdm
 
 ap = ArgumentParser()
 
-ap.add_argument("--csv", type = str, help = "csv file path")
+ap.add_argument("--csv", dest = "csv", type = str, help = "csv file path")
+ap.add_argument("--minsize", dest = "minsize", type = int, default = 10000)
 
 args = ap.parse_args()
 
 FILE = args.csv
+MIN_SIZE = args.minsize
 print(FILE)
 
 
@@ -81,7 +83,10 @@ def make_mask(df, image_label, shape = (1400, 2100), cv_shape = (525, 350),debug
             
     return cv2.resize(mask, cv_shape)
 
-min_size = [10000 ,10000, 10000, 10000]
+min_size = [MIN_SIZE ,MIN_SIZE, MIN_SIZE, MIN_SIZE]
+
+print("Min size")
+print(min_size)
 def post_process_minsize(mask, min_size):
     """
     Post processing of each predicted mask, components with lesser number of pixels
