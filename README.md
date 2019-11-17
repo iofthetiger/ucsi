@@ -14,6 +14,7 @@ The git for the could detection
 ### Notebooks
 
 * Core [training notebook](ref_b5.ipynb)
+
 * Training [notebook](catalyst_train_newinf.ipynb) with threshold finding on training dataset
 
 
@@ -27,7 +28,7 @@ The git for the could detection
 ### Ploygon Convex Post Processing
  This is a CPU only operation
  ```
- python polygon_cpu.py --csv=subxxx.csv
+ python polygon_cpu.py --csv=subxxx.csv --minsize=5000
  ```
  
 ### Google Storage Access
