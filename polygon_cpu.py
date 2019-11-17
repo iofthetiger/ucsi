@@ -276,6 +276,12 @@ for test_img_i, test_img in enumerate(tqdm(test_imgs)):
 
 print("Creating dataframe")
 submission_df = pd.DataFrame({'Image_Label': img_label_list, 'EncodedPixels': enc_pixels_list})
+
+def bringOrder(df):
+    return df.sort_values(by="Image_Label", ascending=True).reset_index().drop("index",axis=1)
+# keep the original image order
+submission_df = bringOrder(submission_df)
+
 submission_df.to_csv('convex_%s'%(FILE), index=None)
 
 print("File saved to:\t%s"%('convex_%s'%(FILE)))
