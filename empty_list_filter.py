@@ -103,9 +103,11 @@ print(f'{len(image_labels_empty.intersection(nonempty_can_remove))} masks will b
 
 # In[45]:
 
+remove_list = image_labels_empty.intersection(nonempty_can_remove)
 
+print(remove_list)
 #removing masks
-submission.loc[submission['Image_Label'].isin(nonempty_can_remove), 'EncodedPixels'] = np.nan
+submission.loc[submission['Image_Label'].isin(remove_list), 'EncodedPixels'] = np.nan
 SAVE_PATH = 'emp_%s'%(SUBFILE)
 print("New submission saved to :\t%s"%(SAVE_PATH))
 submission.to_csv(SAVE_PATH, index=None)
