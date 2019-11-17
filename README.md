@@ -31,6 +31,12 @@ The git for the could detection
  python polygon_cpu.py --csv=subxxx.csv --minsize=5000
  ```
  
+### Classifier Empty List Filter
+Remove according to empty list 
+```
+python empty_list_filter.py --csv=xxxxx.csv
+```
+ 
 ### Google Storage Access
 
 * Check [this test notebook](google_storage_test.ipynb) for storage access api
