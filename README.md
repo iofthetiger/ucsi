@@ -3,10 +3,9 @@ The git for the could detection
 
 ### Competition
 * [Understanding Clouds from Satellite Images](https://www.kaggle.com/c/understanding_cloud_organization)
-
+* We are team ```thunderstroke```, we got a bronze medal after the shakeup.
 
 ### Installations
-
 * Installation [documentation](doc/INSTALL.md)
 * Python [requirements for training](requirements.txt)
 
@@ -26,11 +25,8 @@ The git for the could detection
     * Then we move on to [catalyst fp16 experiments](ref_b5_fp18.ipynb)
     * The loss of accuracy proved significant and detrimental to public LB score. We ditched the fp16 idea.
 
-* Convex hull post processing, the [notebook version](polygon_cpu.ipynb) are from [this open kernel](https://www.kaggle.com/ratthachat/cloud-convexhull-polygon-postprocessing-no-gpu), please upvote this kernel
-    * We managed to simplify the process to [this script](https://github.com/iofthetiger/ucsi/blob/master/polygon_cpu.py), so we can use it in this way:
-```
-python polygon_cpu.py --csv=subxxx.csv --minsize=5000
-```
+* **Convex** hull post processing, the [notebook version](polygon_cpu.ipynb) are from [this open kernel](https://www.kaggle.com/ratthachat/cloud-convexhull-polygon-postprocessing-no-gpu), please upvote this kernel
+    * We managed to simplify the process to [this script](https://github.com/iofthetiger/ucsi/blob/master/polygon_cpu.py), so we can use it in this way:```python polygon_cpu.py --csv=subxxx.csv --minsize=5000```
     * Convex hull can bring **public LB score up around 0.002**. Though upon reviewing our submissions after the private LB released. Many submissions without convex process are much higher. The true effect on private LB is then, unknown.
     * Within this post process, total black strips are removed, aka ```img[img<(2/255)]=0.```. It's probably this technique that improve the public LB actually.
 
@@ -41,15 +37,15 @@ python polygon_cpu.py --csv=subxxx.csv --minsize=5000
 
 * Funnel structure. We fancied a funnel structure, which allows us digest larger pixel size and predict smaller ones. It didn't do well under experiment.
 
-* K-fold Stack
+* **K-fold** Stack
     * Our K-fold [training notebook](catalyst_train_kfold.ipynb), all our final tries are 3~5 folds stacked. With our own ```KFoldManager``` class
     * All best weights (decided by **validation dice loss**) are saved in different log directory, uploaded to GCP bucket.
     * The improvement is not significant, but at least keep producing stable/healthy good result.
-* CSV ensemble. Ensemble using models is time consuming and takes more effort to control. Instead we use submission csv to ensemble.
+* **CSV ensemble**. Ensemble using models is time consuming and takes more effort to control. Instead we use submission csv to ensemble.
     * By using the discrete prediction (reconstructed run length encoding) instead of continuous prediction, and not opening image and not running through model. A huge ensemble can be performed within 5 minutes.
     * Our [csv ensemble notebook](ensemble-from-csv).
 
-* Removing prediction by classification model.
+* Removing prediction using **classification model**.
     * As [this open kernel (a nice kernel, please upvote)](https://www.kaggle.com/mobassir/keras-efficientnetb2-for-classifying-cloud) suggested, even this is a segmentation competition. we can use a classification model to enhance our accuracy.
     * For the convenience of engineering, we didn't run classification model every time, we used the trained classified model to produce an [empty prediction list](empty_list.csv). It's a list of classification prediction on test dataset, all the image+class that has probability below 0.2.
     * Combine with the rumor about data leak, (at least 1 class, we have dedicated effort for this leak). We remove the prediction (from rle to '') if:
@@ -58,7 +54,7 @@ python polygon_cpu.py --csv=subxxx.csv --minsize=5000
         * We boil down the operation to ```python empty_list_filter.py --csv=xxxxx.csv```, we use this each time before we submit the csv since T - 30 hours.
         * The improvement on public LB is around 0.0010
 
-* Test Time Augmentation (TTA), we start to use TTA since this [ensemble inference notebook](https://github.com/iofthetiger/ucsi/blob/master/catalyst_ensemble_v3_tta.ipynb).
+* Test Time Augmentation (**TTA**), we start to use TTA since this [ensemble inference notebook](https://github.com/iofthetiger/ucsi/blob/master/catalyst_ensemble_v3_tta.ipynb).
     * We flip the tensor upside down and horizontally during inference and flip the y hat back.
     * So the inference time x3.
     * The improvement isn't detectable actually, but we stick through this method anyway.
