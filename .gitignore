@@ -2,5 +2,9 @@ train_images
 test_images
 train.csv
 sample_submission.csv
+subs/*.csv
 jit/*.pth
+*_sub.csv
+.ipynb_checkpoints/*
+*_submission.csv
 fastai
