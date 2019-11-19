@@ -70,26 +70,6 @@ python polygon_cpu.py --csv=subxxx.csv --minsize=5000
     * Our [operation private Ryan](csv_safenet.ipynb) is targeting these missing predictions, to use predictions from other csv submissions. To guarantee at least 1 class prediction for each picture, as much as possible.
     * The public LB from 0.66560 to 0.66566. The private LB score, on retrospect, got worse. Our final selected submissions don't use operation Ryan at all.
 
-
-### Leads
-* [x] FP16 will easily lead to gradient overflow in this case
-* [x] Ensemble
-* [x] Polygon
-* [x] More experiments on min size/threshold
-* [x] sigmoid 1st then to float64
-
-### Ploygon Convex Post Processing
- This is a CPU only operation
- ```
- python polygon_cpu.py --csv=subxxx.csv --minsize=5000
- ```
-
-### Classifier Empty List Filter
-Remove according to empty list
-```
-python empty_list_filter.py --csv=xxxxx.csv
-```
-
 ### Google Storage Access
 
 * Check [this test notebook](google_storage_test.ipynb) for storage access api
