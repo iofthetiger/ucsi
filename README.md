@@ -5,6 +5,8 @@ The git for the could detection
 * [Understanding Clouds from Satellite Images](https://www.kaggle.com/c/understanding_cloud_organization)
 * We are team ```thunderstroke```, we got a bronze medal after the shakeup.
 
+<img src="https://camo.githubusercontent.com/e9a8db6313cab9fb275ee5f7d8387ab81508a9fc/68747470733a2f2f692e696d6775722e636f6d2f454f767a356b642e706e67" alt="" data-canonical-src="https://i.imgur.com/EOvz5kd.png">
+
 ### Installations
 * Installation [documentation](doc/INSTALL.md)
 * Python [requirements for training](requirements.txt)
@@ -35,12 +37,17 @@ The git for the could detection
     * Ensemble between similar score models are better
     * Ensemble between difference sizes of models are better (All our final submission tries are on different sizes)
 
+* Ensemble using JIT.
+    * Save the model to [jit weights](le_jit.ipynb)
+    * In this contest, jit savings aren't entirely truthful
+
 * Funnel structure. We fancied a funnel structure, which allows us digest larger pixel size and predict smaller ones. It didn't do well under experiment.
 
 * **K-fold** Stack
     * Our K-fold [training notebook](catalyst_train_kfold.ipynb), all our final tries are 3~5 folds stacked. With our own ```KFoldManager``` class
     * All best weights (decided by **validation dice loss**) are saved in different log directory, uploaded to GCP bucket.
     * The improvement is not significant, but at least keep producing stable/healthy good result.
+
 * **CSV ensemble**. Ensemble using models is time consuming and takes more effort to control. Instead we use submission csv to ensemble.
     * By using the discrete prediction (reconstructed run length encoding) instead of continuous prediction, and not opening image and not running through model. A huge ensemble can be performed within 5 minutes.
     * Our [csv ensemble notebook](ensemble-from-csv).
